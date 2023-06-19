@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Tabliczka mnożenia i dane osobowe</title>
+  <style>
+    table {
+      border-collapse: collapse;
+    }
+
+    td {
+      border: 1px solid black;
+      padding: 10px;
+    }
+  </style>
+</head>
+<body>
+  <h2>Tabliczka mnożenia</h2>
+  <table>
+    <tbody id="multiplicationTable"></tbody>
+  </table>
+
+  <h2>Dane osobowe</h2>
+  <pre id="personalData"></pre>
+
+  <script>
+    // Zadanie 1: Tabliczka mnożenia
+    function generateMultiplicationTable() {
+      var table = document.getElementById("multiplicationTable");
+
+      for (var i = 1; i <= 10; i++) {
+        var row = document.createElement("tr");
+
+        for (var j = 1; j <= 10; j++) {
+          var cell = document.createElement("td");
+          cell.textContent = i * j;
+          row.appendChild(cell);
+        }
+
+        table.appendChild(row);
+      }
+    }
+
+    // Zadanie 2: Dane osobowe
+    function generatePersonalData(numRecords) {
+      var personalData = document.getElementById("personalData");
+      var names = ["Jan", "Anna", "Piotr", "Marta", "Tomasz"];
+      var surnames = ["Kowalski", "Nowak", "Wiśniewski", "Wójcik", "Mazur"];
+
+      var data = [];
+
+      for (var i = 0; i < numRecords; i++) {
+        var name = names[Math.floor(Math.random() * names.length)];
+        var surname = surnames[Math.floor(Math.random() * surnames.length)];
+        var age = Math.floor(Math.random() * (80 - 18 + 1)) + 18;
+        var phone = Math.floor(Math.random() * (8000000 - 5000000 + 1)) + 5000000;
+
+        var record = {
+          "name": name,
+          "surname": surname,
+          "age": age,
+          "phone": phone
+        };
+
+        data.push(record);
+      }
+
+      personalData.textContent = JSON.stringify(data, null, 2);
+    }
+
+    // Wywołanie funkcji generujących dane
+    generateMultiplicationTable();
+    generatePersonalData(20);
+  </script>
+<!-- Code injected by live-server -->
+<script>
+	// <![CDATA[  <-- For SVG support
+	if ('WebSocket' in window) {
+		(function () {
+			function refreshCSS() {
+				var sheets = [].slice.call(document.getElementsByTagName("link"));
+				var head = document.getElementsByTagName("head")[0];
+				for (var i = 0; i < sheets.length; ++i) {
+					var elem = sheets[i];
+					var parent = elem.parentElement || head;
+					parent.removeChild(elem);
+					var rel = elem.rel;
+					if (elem.href && typeof rel != "string" || rel.length == 0 || rel.toLowerCase() == "stylesheet") {
+						var url = elem.href.replace(/(&|\?)_cacheOverride=\d+/, '');
+						elem.href = url + (url.indexOf('?') >= 0 ? '&' : '?') + '_cacheOverride=' + (new Date().valueOf());
+					}
+					parent.appendChild(elem);
+				}
+			}
+			var protocol = window.location.protocol === 'http:' ? 'ws://' : 'wss://';
+			var address = protocol + window.location.host + window.location.pathname + '/ws';
+			var socket = new WebSocket(address);
+			socket.onmessage = function (msg) {
+				if (msg.data == 'reload') window.location.reload();
+				else if (msg.data == 'refreshcss') refreshCSS();
+			};
+			if (sessionStorage && !sessionStorage.getItem('IsThisFirstTime_Log_From_LiveServer')) {
+				console.log('Live reload enabled.');
+				sessionStorage.setItem('IsThisFirstTime_Log_From_LiveServer', true);
+			}
+		})();
+	}
+	else {
+		console.error('Upgrade your browser. This Browser is NOT supported WebSocket for Live-Reloading.');
+	}
+	// ]]>
+</script>
+</body>
+</html>
