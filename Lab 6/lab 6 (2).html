@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Zadania</title>
+</head>
+<body>
+  <h1>Zadania</h1>
+
+  <h2>Zadanie 1: Klasa Prostokąt</h2>
+  <div id="prostokat1"></div>
+  <div id="prostokat2"></div>
+  <div id="prostokat3"></div>
+
+  <h2>Zadanie 3: Klasa Trapez</h2>
+  <div id="trapez1"></div>
+  <div id="trapez2"></div>
+  <div id="trapez3"></div>
+
+  <h2>Zadanie 4: Znajdowanie największej figury</h2>
+  <div id="najwiekszaFigura"></div>
+
+  <h2>Zadanie 6: Zmiana nazwy prostokąta</h2>
+  <div id="nazwaProstokata"></div>
+
+  <h2>Zadanie 1+: Operacje na tablicy liczb</h2>
+  <div id="wynikiOperacji"></div>
+
+  <script>
+    class Prostokat {
+      constructor(wysokosc, szerokosc, nazwa) {
+        this.wysokosc = wysokosc;
+        this.szerokosc = szerokosc;
+        this.nazwa = nazwa;
+      }
+
+      obwod() {
+        return 2 * (this.wysokosc + this.szerokosc);
+      }
+
+      pole() {
+        return this.wysokosc * this.szerokosc;
+      }
+
+      porownaj(other) {
+        if (this.pole() > other.pole()) {
+          return this;
+        } else if (this.pole() < other.pole()) {
+          return other;
+        } else {
+          return null;
+        }
+      }
+    }
+
+    class Trapez {
+      constructor(wysokosc, podstawa1, podstawa2, nazwa) {
+        this.wysokosc = wysokosc;
+        this.podstawa1 = podstawa1;
+        this.podstawa2 = podstawa2;
+        this.nazwa = nazwa;
+      }
+
+      pole() {
+        return ((this.podstawa1 + this.podstawa2) * this.wysokosc) / 2;
+      }
+    }
+
+    function znajdzNajwiekszePole(prostokat, trojkat, trapez) {
+      const figury = [prostokat, trojkat, trapez];
+      let najwiekszePole = 0;
+      let nazwaNajwiekszejFigury = "";
+
+      for (const figura of figury) {
+        if (figura.pole() > najwiekszePole) {
+          najwiekszePole = figura.pole();
+          nazwaNajwiekszejFigury = figura.nazwa;
+        }
+      }
+
+      const najwiekszaFiguraElement = document.getElementById("najwiekszaFigura");
+      najwiekszaFiguraElement.textContent = `Największe pole ma figura: ${nazwaNajwiekszejFigury}, pole = ${najwiekszePole}`;
+    }
+
+    function zmienNazwe(prostokat, nowaNazwa) {
+      prostokat.nazwa = nowaNazwa;
+      const nazwaProstokataElement = document.getElementById("nazwaProstokata");
+      nazwaProstokataElement.textContent = `Nowa nazwa prostokąta: ${prostokat.nazwa}`;
+    }
+
+    function wykonajOperacjeNaTablicy(tablica, numerAlbumu) {
+      const suma = tablica.reduce((acc, curr) => acc + curr, 0);
+      const parzyste = tablica.filter((liczba) => liczba % 2 === 0);
+      const pomnozone = tablica.map((liczba) => liczba * 3);
+      tablica.push(numerAlbumu);
+      const indexAlbumu = tablica.indexOf(numerAlbumu);
+      const srednia = suma / tablica.length;
+      const najwieksza = Math.max(...tablica);
+      const wartosc = 5;
+      const wystapienia = tablica.filter((liczba) => liczba === wartosc).length;
+
+      const wynikiOperacjiElement = document.getElementById("wynikiOperacji");
+      wynikiOperacjiElement.innerHTML = `
+        Suma: ${suma}<br>
+        Liczby parzyste: ${parzyste}<br>
+        Wartości pomnożone przez 3: ${pomnozone}<br>
+        Index numeru albumu: ${indexAlbumu}<br>
+        Średnia arytmetyczna: ${srednia}<br>
+        Największa liczba: ${najwieksza}<br>
+        Ilość wystąpień wartości ${wartosc} w tablicy: ${wystapienia}
+      `;
+    }
+
+    // Przykładowe użycie
+    const prostokat1 = new Prostokat(5, 10, "Prostokąt 1");
+    const prostokat2 = new Prostokat(3, 7, "Prostokąt 2");
+    const prostokat3 = new Prostokat(6, 8, "Prostokąt 3");
+
+    const trojkat = new Prostokat(4, 6, "Trójkąt");
+
+    const trapez = new Trapez(5, 4, 6, "Trapez");
+
+    znajdzNajwiekszePole(prostokat1, trojkat, trapez);
+
+    const nazwaProstokataElement = document.getElementById("nazwaProstokata");
+    nazwaProstokataElement.textContent = `Nazwa prostokąta przed zmianą: ${prostokat1.nazwa}`;
+    zmienNazwe(prostokat1, "Nowa nazwa prostokąta");
+
+    const tablicaLiczb = [1, 2, 3, 4, 5];
+    const numerAlbumu = 12345;
+    wykonajOperacjeNaTablicy(tablicaLiczb, numerAlbumu);
+  </script>
+<!-- Code injected by live-server -->
+<script>
+	// <![CDATA[  <-- For SVG support
+	if ('WebSocket' in window) {
+		(function () {
+			function refreshCSS() {
+				var sheets = [].slice.call(document.getElementsByTagName("link"));
+				var head = document.getElementsByTagName("head")[0];
+				for (var i = 0; i < sheets.length; ++i) {
+					var elem = sheets[i];
+					var parent = elem.parentElement || head;
+					parent.removeChild(elem);
+					var rel = elem.rel;
+					if (elem.href && typeof rel != "string" || rel.length == 0 || rel.toLowerCase() == "stylesheet") {
+						var url = elem.href.replace(/(&|\?)_cacheOverride=\d+/, '');
+						elem.href = url + (url.indexOf('?') >= 0 ? '&' : '?') + '_cacheOverride=' + (new Date().valueOf());
+					}
+					parent.appendChild(elem);
+				}
+			}
+			var protocol = window.location.protocol === 'http:' ? 'ws://' : 'wss://';
+			var address = protocol + window.location.host + window.location.pathname + '/ws';
+			var socket = new WebSocket(address);
+			socket.onmessage = function (msg) {
+				if (msg.data == 'reload') window.location.reload();
+				else if (msg.data == 'refreshcss') refreshCSS();
+			};
+			if (sessionStorage && !sessionStorage.getItem('IsThisFirstTime_Log_From_LiveServer')) {
+				console.log('Live reload enabled.');
+				sessionStorage.setItem('IsThisFirstTime_Log_From_LiveServer', true);
+			}
+		})();
+	}
+	else {
+		console.error('Upgrade your browser. This Browser is NOT supported WebSocket for Live-Reloading.');
+	}
+	// ]]>
+</script>
+</body>
+</html>
